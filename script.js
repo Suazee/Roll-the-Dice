@@ -116,6 +116,7 @@ function resetGame() {
   document.querySelector("#score--0").textContent = player1Total;
   document.querySelector("#score--1").textContent = player2Total;
   document.querySelector(".player--0").classList.add("player--active");
+  newGameButton.removeEventListener("click", resetGame);
   startGame();
 }
 
