@@ -66,7 +66,7 @@ function gameLogic() {
   whoseTurn();
   holdScoreButton.addEventListener("click", holdScoreEvent);
   diceRolled.classList.remove("hidden");
-  diceRolled.src = `../images/dice-${randomNumberGenerator()}.png`;
+  diceRolled.src = `images/dice-${randomNumberGenerator()}.png`;
 
   playerScore += randomNumber;
   if (randomNumber === 1) {
