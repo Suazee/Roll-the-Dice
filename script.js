@@ -18,7 +18,6 @@ let activePlayer;
 /*---------------------------PRESENTS THE RULES OF THE GAME ONCE THE PAGE IS LOADED UP-------------------------- */
 
 closeModalButton.addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
 
 function closeModal() {
   overlay.classList.add("hidden");
@@ -71,22 +70,22 @@ function updateTotalScore(total) {
 function gameLogic() {
   // DETECTS WHO THE ACTIVATE PLAYER IS FROM whoseTurn(), ACTIVATES THGE HOLD BUTTON
   // MAKES SURE THE RIGHT DICE IS BEING DISPLAYED ON SCREEN
-  // CHECKS IF THE ACTIVE PLAYER ROLLED A ONE AND CALLS THE nextPlayer()
+  // CHECKS IF THE ACTIVE PLAYER ROLLED A ONE AND CALLS THE switchPlayer()
 
   whoseTurn();
-  holdScoreButton.addEventListener("click", holdScoreEvent);
+  holdScoreButton.addEventListener("click", holdCurrentScore);
   diceRolled.classList.remove("hidden");
-  diceRolled.src = `images/dice-${randomNumberGenerator()}.png`;
+  diceRolled.src = `../images/dice-${randomNumberGenerator()}.png`;
 
   if (randomNumber === 1) {
-    nextPlayer();
+    switchPlayer();
   } else {
     currentScore += randomNumber;
     updateCurrentScore();
   }
 }
 
-function nextPlayer() {
+function switchPlayer() {
   // SWITCHES THE ACTIVE AND INACTIVE PLAYER AND RESETS THE CURRENT SCORE BACK TO 0
 
   currentScore = 0;
@@ -98,31 +97,28 @@ function nextPlayer() {
     .querySelector(`.player--${activePlayer === 0 ? 1 : 0}`)
     .classList.add("player--active");
   whoseTurn();
-  holdScoreButton.removeEventListener("click", holdScoreEvent);
+  holdScoreButton.removeEventListener("click", holdCurrentScore);
 }
 
-function holdScoreEvent() {
+function holdCurrentScore() {
   // ADDS THE CURRENT SCORE OF THE ACTIVE PLAYER TO THE TOTAL SCORE OF THE PLAYER WHEN THE PLAYER HITS THE HOLD BUTTON
   // CHECKS FOR THE WINNER
-  // CALLS THE nextPlayer() IF NO WINNER IS FOUND
+  // CALLS THE switchPlayer() IF NO WINNER IS FOUND
 
   if (activePlayer === 0) {
     player1Total += currentScore;
     updateTotalScore(player1Total);
-    if (player1Total >= 100) {
-      callWinner();
-      return;
-    }
   } else {
     player2Total += currentScore;
     updateTotalScore(player2Total);
-    if (player2Total >= 100) {
-      callWinner();
-      return;
-    }
   }
 
-  nextPlayer();
+  if (player1Total >= 100 || player2Total >= 100) {
+    callWinner();
+    return;
+  } else {
+    switchPlayer();
+  }
 }
 
 function resetGame() {
@@ -132,16 +128,14 @@ function resetGame() {
   player1Total = 0;
   player2Total = 0;
   updateCurrentScore();
-  diceRolled.classList.add("hidden");
   document
     .querySelector(`.player--${activePlayer}`)
     .classList.remove("player--winner");
-  document
-    .querySelector(`.player--${activePlayer}`)
-    .classList.remove("player--active");
   document.querySelector("#score--0").textContent = player1Total;
   document.querySelector("#score--1").textContent = player2Total;
-  document.querySelector(".player--0").classList.add("player--active");
+  document
+    .querySelector(`.player--${Math.floor(Math.random() * 2)}`)
+    .classList.add("player--active");
   newGameButton.removeEventListener("click", resetGame);
   startGame();
 }
@@ -151,8 +145,12 @@ function callWinner() {
 
   document
     .querySelector(`.player--${activePlayer}`)
+    .classList.remove("player--active");
+  document
+    .querySelector(`.player--${activePlayer}`)
     .classList.add("player--winner");
+  diceRolled.classList.add("hidden");
   diceRollButton.removeEventListener("click", gameLogic);
-  holdScoreButton.removeEventListener("click", holdScoreEvent);
+  holdScoreButton.removeEventListener("click", holdCurrentScore);
   newGameButton.addEventListener("click", resetGame);
 }
