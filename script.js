@@ -15,7 +15,8 @@ let player2Total = 0;
 let randomNumber;
 let activePlayer;
 
-/*---------------------------PRESENTS THE RULES OF THE GAME ONCE THE PAGE IS LOADED UP-------------------------- */
+
+/*------------------------------PIG GAME LOGIC BY JOHNSON AKA SUAZEE------------------------------------------- */
 
 function startGame() {
   // ACTIVATES THE ROLL DICE BUTTON AT THE START OF THE GAME
@@ -116,7 +117,7 @@ function gameLogic() {
   whoseTurn();
   holdScoreButton.addEventListener("click", holdCurrentScore);
   diceRolled.classList.remove("hidden");
-  diceRolled.src = `../images/dice-${randomNumberGenerator()}.png`;
+  diceRolled.src = `images/dice-${randomNumberGenerator()}.png`;
 
   if (randomNumber === 1) {
     switchPlayer();
@@ -151,6 +152,7 @@ function closeModal() {
   startGame();
 }
 
-/*------------------------------PIG GAME LOGIC BY JOHNSON AKA SUAZEE------------------------------------------- */
+
+/*---------------------------PRESENTS THE RULES OF THE GAME ONCE THE PAGE IS LOADED UP-------------------------- */
 
 closeModalButton.addEventListener("click", closeModal);
