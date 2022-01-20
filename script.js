@@ -17,20 +17,23 @@ let activePlayer;
 
 /*---------------------------PRESENTS THE RULES OF THE GAME ONCE THE PAGE IS LOADED UP-------------------------- */
 
-closeModalButton.addEventListener("click", closeModal);
-
-function closeModal() {
-  overlay.classList.add("hidden");
-  ruleModal.classList.add("hidden");
-  startGame();
-}
-
-/*------------------------------PIG GAME LOGIC BY JOHNSON AKA SUAZEE------------------------------------------- */
-
 function startGame() {
   // ACTIVATES THE ROLL DICE BUTTON AT THE START OF THE GAME
 
   diceRollButton.addEventListener("click", gameLogic);
+}
+
+function updateCurrentScore() {
+  // HELPS UPDATE THE CURRENT PLAYER'S SCORE ONCE THE DICE IS ROLLED
+
+  document.querySelector(`#current--${activePlayer}`).textContent =
+    currentScore;
+}
+
+function updateTotalScore(total) {
+  // HELPS UPDATE THE CURRENT PLAYER'S TOTAL SCORE ONCE THE HOLD BUTTON IS PRESSED
+
+  document.querySelector(`#score--${activePlayer}`).textContent = total;
 }
 
 function randomNumberGenerator() {
@@ -54,35 +57,19 @@ function whoseTurn() {
   }
 }
 
-function updateCurrentScore() {
-  // HELPS UPDATE THE CURRENT PLAYER'S SCORE ONCE THE DICE IS ROLLED
+function callWinner() {
+  // ADDS THE WINNER STYLE ON TO THE CURRENT PLAYER THAT HIT 100 TOTAL POINTS FIRST
 
-  document.querySelector(`#current--${activePlayer}`).textContent =
-    currentScore;
-}
-
-function updateTotalScore(total) {
-  // HELPS UPDATE THE CURRENT PLAYER'S TOTAL SCORE ONCE THE HOLD BUTTON IS PRESSED
-
-  document.querySelector(`#score--${activePlayer}`).textContent = total;
-}
-
-function gameLogic() {
-  // DETECTS WHO THE ACTIVATE PLAYER IS FROM whoseTurn(), ACTIVATES THGE HOLD BUTTON
-  // MAKES SURE THE RIGHT DICE IS BEING DISPLAYED ON SCREEN
-  // CHECKS IF THE ACTIVE PLAYER ROLLED A ONE AND CALLS THE switchPlayer()
-
-  whoseTurn();
-  holdScoreButton.addEventListener("click", holdCurrentScore);
-  diceRolled.classList.remove("hidden");
-  diceRolled.src = `images/dice-${randomNumberGenerator()}.png`;
-
-  if (randomNumber === 1) {
-    switchPlayer();
-  } else {
-    currentScore += randomNumber;
-    updateCurrentScore();
-  }
+  document
+    .querySelector(`.player--${activePlayer}`)
+    .classList.remove("player--active");
+  document
+    .querySelector(`.player--${activePlayer}`)
+    .classList.add("player--winner");
+  diceRolled.classList.add("hidden");
+  diceRollButton.removeEventListener("click", gameLogic);
+  holdScoreButton.removeEventListener("click", holdCurrentScore);
+  newGameButton.addEventListener("click", resetGame);
 }
 
 function switchPlayer() {
@@ -121,6 +108,24 @@ function holdCurrentScore() {
   }
 }
 
+function gameLogic() {
+  // DETECTS WHO THE ACTIVATE PLAYER IS FROM whoseTurn(), ACTIVATES THGE HOLD BUTTON
+  // MAKES SURE THE RIGHT DICE IS BEING DISPLAYED ON SCREEN
+  // CHECKS IF THE ACTIVE PLAYER ROLLED A ONE AND CALLS THE switchPlayer()
+
+  whoseTurn();
+  holdScoreButton.addEventListener("click", holdCurrentScore);
+  diceRolled.classList.remove("hidden");
+  diceRolled.src = `../images/dice-${randomNumberGenerator()}.png`;
+
+  if (randomNumber === 1) {
+    switchPlayer();
+  } else {
+    currentScore += randomNumber;
+    updateCurrentScore();
+  }
+}
+
 function resetGame() {
   // RESETS EVERYTHING IN THE GAME BACK TO THE RELOADED PAGE VERSION
 
@@ -140,17 +145,12 @@ function resetGame() {
   startGame();
 }
 
-function callWinner() {
-  // ADDS THE WINNER STYLE ON TO THE CURRENT PLAYER THAT HIT 100 TOTAL POINTS FIRST
-
-  document
-    .querySelector(`.player--${activePlayer}`)
-    .classList.remove("player--active");
-  document
-    .querySelector(`.player--${activePlayer}`)
-    .classList.add("player--winner");
-  diceRolled.classList.add("hidden");
-  diceRollButton.removeEventListener("click", gameLogic);
-  holdScoreButton.removeEventListener("click", holdCurrentScore);
-  newGameButton.addEventListener("click", resetGame);
+function closeModal() {
+  overlay.classList.add("hidden");
+  ruleModal.classList.add("hidden");
+  startGame();
 }
+
+/*------------------------------PIG GAME LOGIC BY JOHNSON AKA SUAZEE------------------------------------------- */
+
+closeModalButton.addEventListener("click", closeModal);
