@@ -207,6 +207,11 @@ main {
   z-index: 10;
 }
 
+.rule-modal p {
+  padding-bottom: 2rem;
+}
+
+
 .overlay {
   position: absolute;
   top: 0;
