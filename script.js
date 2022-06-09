@@ -1,5 +1,6 @@
 "use strict";
 
+// VARIABLES
 const players = document.querySelectorAll(".player");
 const diceRolled = document.querySelector(".dice");
 const diceRollButton = document.querySelector(".btn--roll");
@@ -8,6 +9,8 @@ const newGameButton = document.querySelector(".btn--new");
 const ruleModal = document.querySelector(".rule-modal");
 const closeModalButton = document.querySelector(".close-modal");
 const overlay = document.querySelector(".overlay");
+const player1 = document.getElementById("name--0");
+const player2 = document.getElementById("name--1");
 
 let currentScore = 0;
 let player1Total = 0;
@@ -15,38 +18,37 @@ let player2Total = 0;
 let randomNumber;
 let activePlayer;
 
+/*---------------------------PRESENTS THE RULES OF THE GAME ONCE THE PAGE IS LOADED UP-------------------------- */
 
-/*------------------------------PIG GAME LOGIC BY JOHNSON AKA SUAZEE------------------------------------------- */
-
-function startGame() {
+const startGame = function () {
   // ACTIVATES THE ROLL DICE BUTTON AT THE START OF THE GAME
-
+  player1.textContent = prompt("Player 1, ENTER NAME:");
+  player2.textContent = prompt("Player 2, ENTER NAME:");
+  document
+    .querySelector(`.player--${Math.floor(Math.random() * 2)}`)
+    .classList.add("player--active");
   diceRollButton.addEventListener("click", gameLogic);
-}
+};
 
-function updateCurrentScore() {
+const updateCurrentScore = function () {
   // HELPS UPDATE THE CURRENT PLAYER'S SCORE ONCE THE DICE IS ROLLED
-
   document.querySelector(`#current--${activePlayer}`).textContent =
     currentScore;
-}
+};
 
-function updateTotalScore(total) {
+const updateTotalScore = function (total) {
   // HELPS UPDATE THE CURRENT PLAYER'S TOTAL SCORE ONCE THE HOLD BUTTON IS PRESSED
-
   document.querySelector(`#score--${activePlayer}`).textContent = total;
-}
+};
 
-function randomNumberGenerator() {
+const randomNumberGenerator = function () {
   // GENERATES THE NEW DICE NUMBER TO BE ROLLED
-
   randomNumber = Math.floor(Math.random() * 6 + 1);
   return randomNumber;
-}
+};
 
-function whoseTurn() {
+const whoseTurn = function () {
   // DECTECTS THE ACTIVATE PLAYER IN ORDER TO ENABLE EFFECTIVE SCORE RECORDING
-
   for (let i = 0; i < players.length; i++) {
     if (players[i].classList.contains("player--active")) {
       if (players[i].classList.contains("player--0")) {
@@ -56,11 +58,10 @@ function whoseTurn() {
       }
     }
   }
-}
+};
 
-function callWinner() {
+const callWinner = function () {
   // ADDS THE WINNER STYLE ON TO THE CURRENT PLAYER THAT HIT 100 TOTAL POINTS FIRST
-
   document
     .querySelector(`.player--${activePlayer}`)
     .classList.remove("player--active");
@@ -71,11 +72,10 @@ function callWinner() {
   diceRollButton.removeEventListener("click", gameLogic);
   holdScoreButton.removeEventListener("click", holdCurrentScore);
   newGameButton.addEventListener("click", resetGame);
-}
+};
 
-function switchPlayer() {
+const switchPlayer = function () {
   // SWITCHES THE ACTIVE AND INACTIVE PLAYER AND RESETS THE CURRENT SCORE BACK TO 0
-
   currentScore = 0;
   updateCurrentScore();
   document
@@ -86,13 +86,12 @@ function switchPlayer() {
     .classList.add("player--active");
   whoseTurn();
   holdScoreButton.removeEventListener("click", holdCurrentScore);
-}
+};
 
-function holdCurrentScore() {
+const holdCurrentScore = function () {
   // ADDS THE CURRENT SCORE OF THE ACTIVE PLAYER TO THE TOTAL SCORE OF THE PLAYER WHEN THE PLAYER HITS THE HOLD BUTTON
   // CHECKS FOR THE WINNER
   // CALLS THE switchPlayer() IF NO WINNER IS FOUND
-
   if (activePlayer === 0) {
     player1Total += currentScore;
     updateTotalScore(player1Total);
@@ -101,35 +100,32 @@ function holdCurrentScore() {
     updateTotalScore(player2Total);
   }
 
-  if (player1Total >= 100 || player2Total >= 100) {
+  if (player1Total >= 1000 || player2Total >= 1000) {
     callWinner();
-    return;
+    // return;
   } else {
     switchPlayer();
   }
-}
+};
 
-function gameLogic() {
+const gameLogic = function () {
   // DETECTS WHO THE ACTIVATE PLAYER IS FROM whoseTurn(), ACTIVATES THGE HOLD BUTTON
   // MAKES SURE THE RIGHT DICE IS BEING DISPLAYED ON SCREEN
   // CHECKS IF THE ACTIVE PLAYER ROLLED A ONE AND CALLS THE switchPlayer()
-
   whoseTurn();
-  holdScoreButton.addEventListener("click", holdCurrentScore);
   diceRolled.classList.remove("hidden");
-  diceRolled.src = `images/dice-${randomNumberGenerator()}.png`;
+  diceRolled.src = `../images/dice-${randomNumberGenerator()}.png`;
 
-  if (randomNumber === 1) {
-    switchPlayer();
-  } else {
+  if (randomNumber !== 1) {
     currentScore += randomNumber;
+    if (currentScore >= 50)
+      holdScoreButton.addEventListener("click", holdCurrentScore);
     updateCurrentScore();
-  }
-}
+  } else switchPlayer();
+};
 
-function resetGame() {
+const resetGame = function () {
   // RESETS EVERYTHING IN THE GAME BACK TO THE RELOADED PAGE VERSION
-
   currentScore = 0;
   player1Total = 0;
   player2Total = 0;
@@ -139,20 +135,16 @@ function resetGame() {
     .classList.remove("player--winner");
   document.querySelector("#score--0").textContent = player1Total;
   document.querySelector("#score--1").textContent = player2Total;
-  document
-    .querySelector(`.player--${Math.floor(Math.random() * 2)}`)
-    .classList.add("player--active");
   newGameButton.removeEventListener("click", resetGame);
   startGame();
-}
+};
 
-function closeModal() {
+const closeModal = function () {
   overlay.classList.add("hidden");
   ruleModal.classList.add("hidden");
   startGame();
-}
+};
 
-
-/*---------------------------PRESENTS THE RULES OF THE GAME ONCE THE PAGE IS LOADED UP-------------------------- */
+/*------------------------------PIG GAME LOGIC BY JOHNSON AKA SUAZEE------------------------------------------- */
 
 closeModalButton.addEventListener("click", closeModal);
