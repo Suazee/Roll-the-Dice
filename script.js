@@ -114,7 +114,7 @@ const gameLogic = function () {
   // CHECKS IF THE ACTIVE PLAYER ROLLED A ONE AND CALLS THE switchPlayer()
   whoseTurn();
   diceRolled.classList.remove("hidden");
-  diceRolled.src = `../images/dice-${randomNumberGenerator()}.png`;
+  diceRolled.src = `images/dice-${randomNumberGenerator()}.png`;
 
   if (randomNumber !== 1) {
     currentScore += randomNumber;
