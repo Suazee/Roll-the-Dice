@@ -8,14 +8,14 @@
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="images/SuazeeFavicon.ico"
+      href="../images/SuazeeFavicon.ico"
     />
     <link rel="stylesheet" href="style.css" />
     <title>ROLL THE DICE 🎲 || by Suazee</title>
   </head>
   <body>
     <main>
-      <section class="player player--0 player--active">
+      <section class="player player--0">
         <h2 class="name" id="name--0">Player 1</h2>
         <p class="score" id="score--0">0</p>
         <div class="current">
@@ -32,7 +32,7 @@
         </div>
       </section>
 
-      <img src="images/dice-1.png" alt="Playing dice" class="dice hidden" />
+      <img src="../images/dice-1.png" alt="Playing dice" class="dice hidden" />
       <button class="btn btn--new">🔄 New game</button>
       <button class="btn btn--roll">🎲 Roll dice</button>
       <button class="btn btn--hold">📥 Hold</button>
@@ -41,26 +41,24 @@
       <button class="close-modal">&times;</button>
       <h1>🎲 "ROLL THE DICE" 🎲 RULES</h1>
       <br />
-      <p>🎲 The game has 2 players, playing in rounds</p>
+      <p>🎲 The game has 2 players, playing in turns</p>
       <p>
-        🎲 In each turn, a player rolls a dice as many times as he whishes. Each
-        result get added to the ROUND score
+        🎲 In each turn, a player rolls a dice as many times as he wishes. Each
+        result gets added to the ROUND score
+      </p>
+      <p>🎲 If the player rolls a 1, the ROUND score gets lost</p>
+      <p>
+        🎲 The player can choose to 'Hold' ONLY when the ROUND score hits at
+        least 50 points, which means that the ROUND score gets added to the
+        GLOBAL score
       </p>
       <p>
-        🎲 BUT, if the player rolls a 1, all the ROUND score gets lost. After
-        that, it's the next player's turn
-      </p>
-      <p>
-        🎲 The player can choose to 'Hold', which means that the ROUND score
-        gets added to the GLOBAL score. After that, it's the next player's turn
-      </p>
-      <p>
-        🎲 The first player to reach 100 points on GLOBAL score wins the game
+        🎲 The first player to reach 1000 points on GLOBAL score wins the game
       </p>
       <br />
       <h4>Goodluck 🍀</h4>
     </section>
     <section class="overlay"></section>
-    <script src="script.js"></script>
+    <script src="../src/script.js"></script>
   </body>
 </html>
