@@ -9,8 +9,10 @@ const newGameButton = document.querySelector(".btn--new");
 const ruleModal = document.querySelector(".rule-modal");
 const closeModalButton = document.querySelector(".close-modal");
 const overlay = document.querySelector(".overlay");
-const player1 = document.getElementById("name--0");
-const player2 = document.getElementById("name--1");
+const playerName1 = document.getElementById("name--0");
+const playerName2 = document.getElementById("name--1");
+const score1 = document.getElementById("score--0");
+const score2 = document.getElementById("score--1");
 
 let currentScore = 0;
 let player1Total = 0;
@@ -22,8 +24,8 @@ let activePlayer;
 
 const startGame = function () {
   // ACTIVATES THE ROLL DICE BUTTON AT THE START OF THE GAME
-  player1.textContent = prompt("Player 1, ENTER NAME:");
-  player2.textContent = prompt("Player 2, ENTER NAME:");
+  playerName1.textContent = prompt("Player 1, ENTER NAME:");
+  playerName2.textContent = prompt("Player 2, ENTER NAME:");
   document
     .querySelector(`.player--${Math.floor(Math.random() * 2)}`)
     .classList.add("player--active");
@@ -51,11 +53,8 @@ const whoseTurn = function () {
   // DECTECTS THE ACTIVATE PLAYER IN ORDER TO ENABLE EFFECTIVE SCORE RECORDING
   for (let i = 0; i < players.length; i++) {
     if (players[i].classList.contains("player--active")) {
-      if (players[i].classList.contains("player--0")) {
-        activePlayer = 0;
-      } else {
-        activePlayer = 1;
-      }
+      if (players[i].classList.contains("player--0")) activePlayer = 0;
+      else activePlayer = 1;
     }
   }
 };
@@ -78,6 +77,7 @@ const switchPlayer = function () {
   // SWITCHES THE ACTIVE AND INACTIVE PLAYER AND RESETS THE CURRENT SCORE BACK TO 0
   currentScore = 0;
   updateCurrentScore();
+  // activePlayer = activePlayer === 0 ? 1 : 0
   document
     .querySelector(`.player--${activePlayer}`)
     .classList.remove("player--active");
@@ -100,12 +100,8 @@ const holdCurrentScore = function () {
     updateTotalScore(player2Total);
   }
 
-  if (player1Total >= 1000 || player2Total >= 1000) {
-    callWinner();
-    // return;
-  } else {
-    switchPlayer();
-  }
+  if (player1Total >= 1000 || player2Total >= 1000) callWinner();
+  else switchPlayer();
 };
 
 const gameLogic = function () {
@@ -133,8 +129,8 @@ const resetGame = function () {
   document
     .querySelector(`.player--${activePlayer}`)
     .classList.remove("player--winner");
-  document.querySelector("#score--0").textContent = player1Total;
-  document.querySelector("#score--1").textContent = player2Total;
+  score1.textContent = player1Total;
+  score2.textContent = player2Total;
   newGameButton.removeEventListener("click", resetGame);
   startGame();
 };
