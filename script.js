@@ -39,6 +39,7 @@ const startGame = function () {
     .classList.add("player--active");
   diceRollButton.addEventListener("click", gameLogic);
   whoseTurn();
+  switchPlayer();
 };
 
 const updateCurrentScore = function () {
