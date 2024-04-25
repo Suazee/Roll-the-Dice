@@ -30,7 +30,6 @@ const startGame = function () {
     .querySelector(`.player--${Math.floor(Math.random() * 2)}`)
     .classList.add("player--active");
   diceRollButton.addEventListener("click", gameLogic);
-  newGameButton.addEventListener("click", resetGame);
 };
 
 const updateCurrentScore = function () {
@@ -139,6 +138,7 @@ const resetGame = function () {
 const closeModal = function () {
   overlay.classList.add("hidden");
   ruleModal.classList.add("hidden");
+  newGameButton.addEventListener("click", resetGame);
   startGame();
 };
 
