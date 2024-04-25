@@ -139,8 +139,8 @@ const resetGame = function () {
 const closeModal = function () {
   overlay.classList.add("hidden");
   ruleModal.classList.add("hidden");
-  newGameButton.addEventListener("click", resetGame);
   startGame();
+  newGameButton.addEventListener("click", resetGame);
 };
 
 /*------------------------------PIG GAME LOGIC BY JOHNSON AKA SUAZEE------------------------------------------- */
