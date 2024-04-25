@@ -19,13 +19,22 @@ let player1Total = 0;
 let player2Total = 0;
 let randomNumber;
 let activePlayer;
+let newGame = true;
+let winner = true;
 
 /*---------------------------PRESENTS THE RULES OF THE GAME ONCE THE PAGE IS LOADED UP-------------------------- */
 
-const startGame = function () {
-  // ACTIVATES THE ROLL DICE BUTTON AT THE START OF THE GAME
+const playerName = function () {
+  if (newGame && winner) {
   playerName1.textContent = prompt("Player 1, ENTER NAME:");
   playerName2.textContent = prompt("Player 2, ENTER NAME:");
+  };
+};
+
+const startGame = function () {
+  // ACTIVATES THE ROLL DICE BUTTON AT THE START OF THE GAME
+  playerName();
+  winner = false;
   document
     .querySelector(`.player--${Math.floor(Math.random() * 2)}`)
     .classList.add("player--active");
@@ -71,6 +80,7 @@ const callWinner = function () {
   diceRolled.classList.add("hidden");
   diceRollButton.removeEventListener("click", gameLogic);
   holdScoreButton.removeEventListener("click", holdCurrentScore);
+  winner = true;
   // newGameButton.addEventListener("click", resetGame);
 };
 
