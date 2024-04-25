@@ -30,6 +30,7 @@ const startGame = function () {
     .querySelector(`.player--${Math.floor(Math.random() * 2)}`)
     .classList.add("player--active");
   diceRollButton.addEventListener("click", gameLogic);
+  whoseTurn();
 };
 
 const updateCurrentScore = function () {
@@ -108,7 +109,7 @@ const gameLogic = function () {
   // DETECTS WHO THE ACTIVATE PLAYER IS FROM whoseTurn(), ACTIVATES THGE HOLD BUTTON
   // MAKES SURE THE RIGHT DICE IS BEING DISPLAYED ON SCREEN
   // CHECKS IF THE ACTIVE PLAYER ROLLED A ONE AND CALLS THE switchPlayer()
-  whoseTurn();
+  // whoseTurn();
   diceRolled.classList.remove("hidden");
   diceRolled.src = `images/dice-${randomNumberGenerator()}.png`;
 
@@ -140,7 +141,7 @@ const closeModal = function () {
   overlay.classList.add("hidden");
   ruleModal.classList.add("hidden");
   startGame();
-  newGameButton.addEventListener("click", resetGame);
+  newGameButton.removeEventListener("click", resetGame);
 };
 
 /*------------------------------PIG GAME LOGIC BY JOHNSON AKA SUAZEE------------------------------------------- */
