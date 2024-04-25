@@ -118,7 +118,6 @@ const resetGame = function () {
   score2.textContent = player2Total;
   // newGameButton.removeEventListener("click", resetGame);
   startGame();
-  console.log("Hello");
 };
 
 const gameLogic = function () {
