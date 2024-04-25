@@ -30,6 +30,7 @@ const startGame = function () {
     .querySelector(`.player--${Math.floor(Math.random() * 2)}`)
     .classList.add("player--active");
   diceRollButton.addEventListener("click", gameLogic);
+  newGameButton.addEventListener("click", resetGame);
 };
 
 const updateCurrentScore = function () {
@@ -70,7 +71,7 @@ const callWinner = function () {
   diceRolled.classList.add("hidden");
   diceRollButton.removeEventListener("click", gameLogic);
   holdScoreButton.removeEventListener("click", holdCurrentScore);
-  newGameButton.addEventListener("click", resetGame);
+  // newGameButton.addEventListener("click", resetGame);
 };
 
 const switchPlayer = function () {
@@ -131,7 +132,7 @@ const resetGame = function () {
     .classList.remove("player--winner");
   score1.textContent = player1Total;
   score2.textContent = player2Total;
-  newGameButton.removeEventListener("click", resetGame);
+  // newGameButton.removeEventListener("click", resetGame);
   startGame();
 };
 
