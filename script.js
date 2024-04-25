@@ -105,22 +105,6 @@ const holdCurrentScore = function () {
   else switchPlayer();
 };
 
-const gameLogic = function () {
-  // DETECTS WHO THE ACTIVATE PLAYER IS FROM whoseTurn(), ACTIVATES THGE HOLD BUTTON
-  // MAKES SURE THE RIGHT DICE IS BEING DISPLAYED ON SCREEN
-  // CHECKS IF THE ACTIVE PLAYER ROLLED A ONE AND CALLS THE switchPlayer()
-  // whoseTurn();
-  diceRolled.classList.remove("hidden");
-  diceRolled.src = `images/dice-${randomNumberGenerator()}.png`;
-
-  if (randomNumber !== 1) {
-    currentScore += randomNumber;
-    // if (currentScore >= 50)
-    holdScoreButton.addEventListener("click", holdCurrentScore);
-    updateCurrentScore();
-  } else switchPlayer();
-};
-
 const resetGame = function () {
   // RESETS EVERYTHING IN THE GAME BACK TO THE RELOADED PAGE VERSION
   currentScore = 0;
@@ -137,11 +121,27 @@ const resetGame = function () {
   console.log("Hello");
 };
 
+const gameLogic = function () {
+  // DETECTS WHO THE ACTIVATE PLAYER IS FROM whoseTurn(), ACTIVATES THGE HOLD BUTTON
+  // MAKES SURE THE RIGHT DICE IS BEING DISPLAYED ON SCREEN
+  // CHECKS IF THE ACTIVE PLAYER ROLLED A ONE AND CALLS THE switchPlayer()
+  // whoseTurn();
+  newGameButton.addEventListener("click", resetGame);
+  diceRolled.classList.remove("hidden");
+  diceRolled.src = `images/dice-${randomNumberGenerator()}.png`;
+
+  if (randomNumber !== 1) {
+    currentScore += randomNumber;
+    // if (currentScore >= 50)
+    holdScoreButton.addEventListener("click", holdCurrentScore);
+    updateCurrentScore();
+  } else switchPlayer();
+};
+
 const closeModal = function () {
   overlay.classList.add("hidden");
   ruleModal.classList.add("hidden");
   startGame();
-  newGameButton.addEventListener("click", resetGame);
 };
 
 /*------------------------------PIG GAME LOGIC BY JOHNSON AKA SUAZEE------------------------------------------- */
