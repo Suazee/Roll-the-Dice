@@ -114,8 +114,8 @@ const gameLogic = function () {
 
   if (randomNumber !== 1) {
     currentScore += randomNumber;
-    if (currentScore >= 50)
-      holdScoreButton.addEventListener("click", holdCurrentScore);
+    // if (currentScore >= 50)
+    holdScoreButton.addEventListener("click", holdCurrentScore);
     updateCurrentScore();
   } else switchPlayer();
 };
